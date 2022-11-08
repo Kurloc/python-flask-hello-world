@@ -35,9 +35,15 @@ variables:
 #       inputs:
 #          repository: 'evuedsoacr'
 #          command: 'push'
-
-- task: Docker@2
-  inputs:
-    repository: 'evuedsoacr.azurecr.io/dcgpu/conductor/backend'
-    command: 'buildAndPush'
-    Dockerfile: '**/Dockerfile'
+stages:
+  - stage: Build
+    displayName: Build image
+    jobs:
+    - job: Build
+      displayName: Build
+      steps:
+      - task: Docker@2
+        inputs:
+          repository: 'evuedsoacr.azurecr.io/dcgpu/conductor/backend'
+          command: 'buildAndPush'
+          Dockerfile: '**/Dockerfile'
