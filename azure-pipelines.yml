@@ -18,7 +18,7 @@ stages:
   - job: Build
     displayName: Build
     pool:
-      vmImage: conductor/testing/flask-hello-world
+      vmImage: test-conductor/backend
     steps:
     - task: Docker@2
       displayName: Build an image
