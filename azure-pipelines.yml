@@ -10,28 +10,34 @@ resources:
 variables:
   tag: '$(Build.BuildId)'
 
-stages:
-- stage: Build
-  displayName: Build image
-  jobs:
-  - job: Build
-    displayName: Build
-    steps:
-# DEBUG BASH SCRIPT
-    - task: Bash@3
-      inputs:
-        targetType: 'inline'
-        script: ls
-# DOCKER BUILD
-    - task: Docker@2
-      displayName: Build an image
-      inputs:
-        command: build
-        dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
-        tags: |
-          $(tag)
-# Docker PUSH
-    - task: Docker@2
-      inputs:
-         repository: 'evuedsoacr'
-         command: 'push'
+# stages:
+# - stage: Build
+#   displayName: Build image
+#   jobs:
+#   - job: Build
+#     displayName: Build
+#     steps:
+# # DEBUG BASH SCRIPT
+#     - task: Bash@3
+#       inputs:
+#         targetType: 'inline'
+#         script: ls
+# # DOCKER BUILD
+#     - task: Docker@2
+#       displayName: Build an image
+#       inputs:
+#         command: build
+#         dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
+#         tags: |
+#           $(tag)
+# # Docker PUSH
+#     - task: Docker@2
+#       inputs:
+#          repository: 'evuedsoacr'
+#          command: 'push'
+
+- task: Docker@2
+  inputs:
+    repository: 'evuedsoacr.azurecr.io/dcgpu/conductor/backend'
+    command: 'buildAndPush'
+    Dockerfile: '**/Dockerfile'
